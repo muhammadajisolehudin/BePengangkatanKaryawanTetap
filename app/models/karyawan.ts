@@ -1,11 +1,12 @@
 import { Model, ModelObject } from "objection";
+import { AkunModel } from './akun'; // Pastikan path impor benar
 
 export interface Karyawan {
   id: string;
   nama: string;
-  jenis_kelamin:boolean;
-  posisi:string;
-  akun_id:number;
+  jenis_kelamin: boolean;
+  posisi: string;
+  akun_id: number;
   created_at: Date;
   updated_at: Date;
 }
@@ -14,7 +15,7 @@ export class KaryawanModel extends Model implements Karyawan {
   id!: string;
   nama!: string;
   jenis_kelamin!: boolean;
-  posisi!:string;
+  posisi!: string;
   akun_id!: number;
   created_at!: Date;
   updated_at!: Date;
@@ -23,7 +24,20 @@ export class KaryawanModel extends Model implements Karyawan {
     return "karyawans";
   }
 
-  // Metode-metode hooks sebelum insert dan update
+  // Definisikan relasi
+  static get relationMappings() {
+    return {
+      akun: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: AkunModel,
+        join: {
+          from: 'karyawans.akun_id',
+          to: 'akuns.id'
+        }
+      }
+    };
+  }
+
   $beforeInsert() {
     this.created_at = new Date();
     this.updated_at = new Date();
@@ -35,4 +49,4 @@ export class KaryawanModel extends Model implements Karyawan {
 }
 
 // Tipe ModelObject untuk KaryawanModel
-export type Karyawans = ModelObject<KaryawanModel>;
+export type KaryawanModelObject = ModelObject<KaryawanModel>;

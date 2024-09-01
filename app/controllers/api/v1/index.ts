@@ -5,9 +5,12 @@
 
 
 import authController from "./authController";
+import kriteriaController from "./kriteriaController";
+import subkriteriaController from "./subkriteriaController";
 
 export {
   authController,
-  
+  kriteriaController,
+  subkriteriaController
 };
 
