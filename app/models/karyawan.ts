@@ -2,7 +2,8 @@ import { Model, ModelObject } from "objection";
 import { AkunModel } from './akun'; // Pastikan path impor benar
 
 export interface Karyawan {
-  id: string;
+  id: number;
+  nip: string;
   nama: string;
   jenis_kelamin: boolean;
   posisi: string;
@@ -12,7 +13,8 @@ export interface Karyawan {
 }
 
 export class KaryawanModel extends Model implements Karyawan {
-  id!: string;
+  id!: number;
+  nip!:string;
   nama!: string;
   jenis_kelamin!: boolean;
   posisi!: string;

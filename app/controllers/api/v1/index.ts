@@ -7,10 +7,14 @@
 import authController from "./authController";
 import kriteriaController from "./kriteriaController";
 import subkriteriaController from "./subkriteriaController";
+import karyawanController from "./karyawanController";
+import akunController from "./akunController";
 
 export {
   authController,
   kriteriaController,
-  subkriteriaController
+  subkriteriaController,
+  karyawanController,
+  akunController
 };
 

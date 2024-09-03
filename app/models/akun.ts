@@ -1,17 +1,16 @@
 import { Model, ModelObject } from "objection";
 
 export interface Akun {
-  username: any;
+  id: number;
+  username: string;
   role: any;
-  id: string;
   password: string;
-  no_hp?: string;
   created_at: Date;
   updated_at: Date;
 }
 
 export class AkunModel extends Model implements Akun {
-  id!: string;
+  id!: number;
   role!: string;
   username!: string;
   password!: string;

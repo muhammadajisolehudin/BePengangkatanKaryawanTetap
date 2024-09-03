@@ -19,6 +19,18 @@ apiRouter.post('/api/v1/subkriteria', controllers.api.v1.subkriteriaController.c
 apiRouter.put('/api/v1/subkriteria/:id', controllers.api.v1.subkriteriaController.update);
 apiRouter.get('/api/v1/subkriteria/:id', controllers.api.v1.subkriteriaController.show);
 apiRouter.delete('/api/v1/subkriteria/:id', controllers.api.v1.subkriteriaController.destroy);
+
+apiRouter.get('/api/v1/karyawan', controllers.api.v1.karyawanController.list);
+apiRouter.post('/api/v1/karyawan', controllers.api.v1.karyawanController.create);
+apiRouter.put('/api/v1/karyawan/:id', controllers.api.v1.karyawanController.update);
+apiRouter.get('/api/v1/karyawan/:id', controllers.api.v1.karyawanController.show);
+apiRouter.delete('/api/v1/karyawan/:id', controllers.api.v1.karyawanController.destroy);
+
+apiRouter.get('/api/v1/akun', controllers.api.v1.akunController.list);
+apiRouter.post('/api/v1/akun/verify-password/:id', controllers.api.v1.akunController.verifyPassword);
+apiRouter.put('/api/v1/akun/change-password/:id', controllers.api.v1.akunController.changePassword);
+apiRouter.get('/api/v1/akun/:id', controllers.api.v1.akunController.show);
+apiRouter.delete('/api/v1/akun/:id', controllers.api.v1.akunController.destroy);
 // Konfigurasi Express untuk menyediakan akses file statis dari direktori uploads
 const UPLOAD_DIR = path.join(__dirname, '../uploads');
 apiRouter.use('/uploads', express.static(UPLOAD_DIR));
