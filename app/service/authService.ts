@@ -29,6 +29,7 @@ const login = async (body: { username: string, password: string }) => {
                     expiresIn: '30d',
                 });
                 const sanitizedUser = {
+                    id:user.id,
                     username: user.username,
                     role: user.role
                 };
