@@ -38,33 +38,60 @@ const getById = async (id: number): Promise<{ status: number; message: string; p
 
 // Fungsi untuk memperbarui Perangkingan
 const updatePerankingan = async (karyawanId: number): Promise<void> => {
-    console.log(`Updating ranking for karyawanId: ${karyawanId}`);
+    console.log(`Memperbarui perankingan untuk karyawanId: ${karyawanId}`);
     try {
         // Ambil semua perhitungan untuk karyawan tertentu
         const perhitunganList = await perhitunganRepository.getByKaryawanId(karyawanId);
 
         if (perhitunganList.length === 0) {
+            console.log(`Tidak ada perhitungan ditemukan untuk karyawanId: ${karyawanId}`);
             return;
         }
 
-        // Hitung total skor dengan presisi desimal
-        const totalScore = perhitunganList.reduce((sum, p) => sum + p.hasil_perhitungan, 0);
+        // Validasi data dan hitung total skor
+        let totalScore = 0;
+        perhitunganList.forEach(data => {
+            // Log tipe dan nilai untuk debugging
+            console.log(`Memproses hasil_perhitungan: ${data.hasil_perhitungan}, tipe: ${typeof data.hasil_perhitungan}`);
+
+            // Konversi hasil_perhitungan ke number jika berupa string
+            const hasilPerhitungan = typeof data.hasil_perhitungan === 'string'
+                ? parseFloat(data.hasil_perhitungan)
+                : data.hasil_perhitungan;
+
+            if (!isNaN(hasilPerhitungan)) {
+                totalScore += hasilPerhitungan;
+            } else {
+                console.error(`Data tidak valid: hasil_perhitungan bukan angka untuk entri`, data);
+            }
+        });
+
+        if (isNaN(totalScore)) {
+            console.error('TotalScore yang dihitung adalah NaN');
+            return;
+        }
+
         const formattedTotalScore = parseFloat(totalScore.toFixed(2));
+
+        const keputusanDiangkat = formattedTotalScore > 0.6;
 
         // Cek apakah ada entri ranking untuk karyawan ini
         const existingRanking = await perangkinganRepository.getByKaryawanId(karyawanId);
 
         if (existingRanking) {
-            // Jika sudah ada, perbarui nilai_p
+            // Jika sudah ada, perbarui nilai_perangkingan
             await perangkinganRepository.update(existingRanking.id, { nilai_perangkingan: formattedTotalScore });
+            console.log(`Memperbarui perankingan yang ada untuk karyawanId: ${karyawanId}`);
         } else {
             // Jika belum ada, buat entri baru
-            await perangkinganRepository.create({ karyawan: karyawanId, nilai_perangkingan: formattedTotalScore, keputusan_diangkat: false, validasi_manager: false });
+            await perangkinganRepository.create({ karyawan: karyawanId, nilai_perangkingan: formattedTotalScore, keputusan_diangkat: keputusanDiangkat, validasi_manager: false });
+            console.log(`Membuat perankingan baru untuk karyawanId: ${karyawanId}`);
         }
     } catch (error: any) {
-        console.error(`Error updating ranking: ${error.message}`);
+        console.error(`Kesalahan saat memperbarui perankingan: ${error.message}`);
     }
 };
+
 
 // Fungsi untuk menghapus Perangkingan
 const remove = async (id: number): Promise<{ status: number; message: string }> => {

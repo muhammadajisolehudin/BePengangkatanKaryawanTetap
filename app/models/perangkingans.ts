@@ -27,18 +27,16 @@ export class PerangkinganModel extends Model implements Perangkingan {
     // Definisikan relasi dengan model lain
     static get relationMappings() {
         return {
-            karyawan: {
+            karyawanRelasi: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: KaryawanModel,
                 join: {
                     from: 'perangkingans.karyawan',
                     to: 'karyawans.id'
                 }
-            },
-            // Jika Anda memiliki model relasi lain yang relevan, tambahkan di sini
+            }
         };
     }
-
     $beforeInsert() {
         this.created_at = new Date();
         this.updated_at = new Date();
