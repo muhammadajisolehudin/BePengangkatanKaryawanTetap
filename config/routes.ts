@@ -31,6 +31,22 @@ apiRouter.post('/api/v1/akun/verify-password/:id', controllers.api.v1.akunContro
 apiRouter.put('/api/v1/akun/change-password/:id', controllers.api.v1.akunController.changePassword);
 apiRouter.get('/api/v1/akun/:id', controllers.api.v1.akunController.show);
 apiRouter.delete('/api/v1/akun/:id', controllers.api.v1.akunController.destroy);
+
+// data evaluasi faktor 
+
+apiRouter.get('/api/v1/evaluasi-faktor', controllers.api.v1.evaluasiFaktorController.list)
+apiRouter.get('/api/v1/evaluasi-faktor/:id', controllers.api.v1.evaluasiFaktorController.show)
+
+apiRouter.post('/api/v1/perhitungan', controllers.api.v1.perhitunganController.create)
+apiRouter.get('/api/v1/perhitungan', controllers.api.v1.perhitunganController.list)
+apiRouter.get('/api/v1/perhitungan/:id', controllers.api.v1.perhitunganController.show)
+apiRouter.delete('/api/v1/perhitungan/:id', controllers.api.v1.perhitunganController.destroy)
+apiRouter.put('/api/v1/perhitungan/:id', controllers.api.v1.perhitunganController.update)
+
+
+apiRouter.get('/api/v1/perankingan', controllers.api.v1.perankinganController.list)
+apiRouter.get('/api/v1/perankingan/:id', controllers.api.v1.perankinganController.show)
+apiRouter.delete('/api/v1/perankingan/:id', controllers.api.v1.perankinganController.destroy)
 // Konfigurasi Express untuk menyediakan akses file statis dari direktori uploads
 const UPLOAD_DIR = path.join(__dirname, '../uploads');
 apiRouter.use('/uploads', express.static(UPLOAD_DIR));

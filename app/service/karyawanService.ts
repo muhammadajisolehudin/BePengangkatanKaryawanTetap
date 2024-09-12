@@ -3,7 +3,7 @@ import * as akunService from './akunService';
 
 interface Karyawan {
     id: number; 
-    nip:string;
+    nip: string;
     nama: string;
     jenis_kelamin: boolean;
     posisi: string;

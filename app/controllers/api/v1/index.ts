@@ -9,12 +9,18 @@ import kriteriaController from "./kriteriaController";
 import subkriteriaController from "./subkriteriaController";
 import karyawanController from "./karyawanController";
 import akunController from "./akunController";
+import evaluasiFaktorController from "./evaluasiFaktorController";
+import perhitunganController from "./perhitunganController";
+import perankinganController from "./perankinganController";
 
 export {
   authController,
   kriteriaController,
   subkriteriaController,
   karyawanController,
-  akunController
+  akunController,
+  evaluasiFaktorController,
+  perhitunganController,
+  perankinganController
 };
 

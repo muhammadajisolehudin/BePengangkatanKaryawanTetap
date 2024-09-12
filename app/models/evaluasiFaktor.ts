@@ -1,21 +1,21 @@
 import { Model, ModelObject } from 'objection';
 
-export interface EvalusiFaktor {
-    id: number; // 'id' adalah tipe number sesuai dengan auto-increment
-    kriteria: number;
-    subkriteria: number; 
-    evaluasi_faktor: number; 
-    created_at: Date;
-    updated_at: Date;
+export interface EvaluasiFaktor {
+    id?: number; // 'id' adalah tipe number sesuai dengan auto-increment
+    bobot_kriteria: number;
+    bobot_subkriteria: number; 
+    hasil_evaluasi_faktor: number; 
+    created_at?: Date;
+    updated_at?: Date;
 }
 
-export class EvaluasiFaktorModel extends Model implements EvalusiFaktor {
-    id!: number; // 'id' harus sesuai dengan tipe data auto-increment
-    kriteria!: number;
-    subkriteria!: number;
-    evaluasi_faktor!: number; 
-    created_at!: Date;
-    updated_at!: Date;
+export class EvaluasiFaktorModel extends Model implements EvaluasiFaktor {
+    id?: number; // 'id' harus sesuai dengan tipe data auto-increment
+    bobot_kriteria!: number;
+    bobot_subkriteria!: number;
+    hasil_evaluasi_faktor!: number; 
+    created_at?: Date;
+    updated_at?: Date;
 
     static get tableName() {
         return 'evaluasi_faktors'; 
