@@ -36,6 +36,20 @@ const getById = async (id: number): Promise<{ status: number; message: string; p
     }
 };
 
+// Fungsi untuk mendapatkan Perangkingan berdasarkan ID Karyawan
+const getByKaryawanId = async (karyawanId: number): Promise<{ status: number; message: string; perangkingan?: Perangkingan }> => {
+    try {
+        const perangkingan = await perangkinganRepository.getByKaryawanId(karyawanId);
+        if (!perangkingan) {
+            return { status: 404, message: `Perangkingan for karyawanId ${karyawanId} not found` };
+        }
+        return { status: 200, message: 'The perangkingan was found', perangkingan };
+
+    } catch (error: any) {
+        return { status: 500, message: `Internal server error: ${error.message}` };
+    }
+};
+
 // Fungsi untuk memperbarui Perangkingan
 const updatePerankingan = async (karyawanId: number): Promise<void> => {
     console.log(`Memperbarui perankingan untuk karyawanId: ${karyawanId}`);
@@ -44,16 +58,12 @@ const updatePerankingan = async (karyawanId: number): Promise<void> => {
         const perhitunganList = await perhitunganRepository.getByKaryawanId(karyawanId);
 
         if (perhitunganList.length === 0) {
-            console.log(`Tidak ada perhitungan ditemukan untuk karyawanId: ${karyawanId}`);
             return;
         }
 
         // Validasi data dan hitung total skor
         let totalScore = 0;
         perhitunganList.forEach(data => {
-            // Log tipe dan nilai untuk debugging
-            console.log(`Memproses hasil_perhitungan: ${data.hasil_perhitungan}, tipe: ${typeof data.hasil_perhitungan}`);
-
             // Konversi hasil_perhitungan ke number jika berupa string
             const hasilPerhitungan = typeof data.hasil_perhitungan === 'string'
                 ? parseFloat(data.hasil_perhitungan)
@@ -67,25 +77,21 @@ const updatePerankingan = async (karyawanId: number): Promise<void> => {
         });
 
         if (isNaN(totalScore)) {
-            console.error('TotalScore yang dihitung adalah NaN');
             return;
         }
 
         const formattedTotalScore = parseFloat(totalScore.toFixed(2));
 
         const keputusanDiangkat = formattedTotalScore > 0.6;
-
-        // Cek apakah ada entri ranking untuk karyawan ini
+        console.log(`Keputusan Diangkat untuk karyawanId ${karyawanId}: ${keputusanDiangkat}`);
         const existingRanking = await perangkinganRepository.getByKaryawanId(karyawanId);
 
         if (existingRanking) {
             // Jika sudah ada, perbarui nilai_perangkingan
-            await perangkinganRepository.update(existingRanking.id, { nilai_perangkingan: formattedTotalScore });
-            console.log(`Memperbarui perankingan yang ada untuk karyawanId: ${karyawanId}`);
+            await perangkinganRepository.update(existingRanking.id, { nilai_perangkingan: formattedTotalScore, keputusan_diangkat: keputusanDiangkat });
         } else {
             // Jika belum ada, buat entri baru
             await perangkinganRepository.create({ karyawan: karyawanId, nilai_perangkingan: formattedTotalScore, keputusan_diangkat: keputusanDiangkat, validasi_manager: false });
-            console.log(`Membuat perankingan baru untuk karyawanId: ${karyawanId}`);
         }
     } catch (error: any) {
         console.error(`Kesalahan saat memperbarui perankingan: ${error.message}`);
@@ -109,4 +115,4 @@ const remove = async (id: number): Promise<{ status: number; message: string }> 
     }
 };
 
-export { list, getById, updatePerankingan, remove };
+export { list, getById, getByKaryawanId, updatePerankingan, remove };

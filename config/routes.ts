@@ -24,7 +24,7 @@ apiRouter.get('/api/v1/karyawan', controllers.api.v1.karyawanController.list);
 apiRouter.post('/api/v1/karyawan', controllers.api.v1.karyawanController.create);
 apiRouter.put('/api/v1/karyawan/:id', controllers.api.v1.karyawanController.update);
 apiRouter.get('/api/v1/karyawan/:id', controllers.api.v1.karyawanController.show);
-apiRouter.delete('/api/v1/karyawan/:id', controllers.api.v1.karyawanController.destroy);
+// apiRouter.delete('/api/v1/karyawan/:id', controllers.api.v1.karyawanController.destroy);
 
 apiRouter.get('/api/v1/akun', controllers.api.v1.akunController.list);
 apiRouter.post('/api/v1/akun/verify-password/:id', controllers.api.v1.akunController.verifyPassword);
@@ -46,7 +46,11 @@ apiRouter.put('/api/v1/perhitungan/:id', controllers.api.v1.perhitunganControlle
 
 apiRouter.get('/api/v1/perankingan', controllers.api.v1.perankinganController.list)
 apiRouter.get('/api/v1/perankingan/:id', controllers.api.v1.perankinganController.show)
+apiRouter.get('/api/v1/perankingan/karyawan/:karyawanId', controllers.api.v1.perankinganController.showByKaryawanId)
 apiRouter.delete('/api/v1/perankingan/:id', controllers.api.v1.perankinganController.destroy)
+
+apiRouter.put('/api/v1/manager/update-validasi-manager/:id', controllers.api.v1.managerController.updateValidasiManager)
+apiRouter.get('/api/v1/manager/get-status/:id', controllers.api.v1.managerController.getValidasiManagerStatus)
 // Konfigurasi Express untuk menyediakan akses file statis dari direktori uploads
 const UPLOAD_DIR = path.join(__dirname, '../uploads');
 apiRouter.use('/uploads', express.static(UPLOAD_DIR));

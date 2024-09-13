@@ -34,10 +34,6 @@ const create = async (body: Perhitungan): Promise<{ status: number; message: str
         if (!subkriteria) {
             return { status: 404, message: `Subkriteria with id ${body.subkriteria} not found` };
         }
-
-        console.log("data hasil evaluasi faktor:", evaluasi_faktor.hasil_evaluasi_faktor)
-        console.log("data bobot kriteria:", kriteria.bobot_kriteria )
-        console.log("data bobot subkriteria:", subkriteria.bobot_subkriteria)
         // Hitung hasil_perhitungan
         const hasil_perhitungan = kriteria.bobot_kriteria * evaluasi_faktor.hasil_evaluasi_faktor; // Sesuaikan dengan kebutuhan perhitungan
 
@@ -54,7 +50,6 @@ const create = async (body: Perhitungan): Promise<{ status: number; message: str
         return { status: 200, message: 'Perhitungan created successfully', perhitungan: createdPerhitungan };
 
     } catch (error: any) {
-        console.error(`Error creating perhitungan: ${error.message}`);
         return { status: 400, message: `Validation error: ${error.message}` };
         
     }

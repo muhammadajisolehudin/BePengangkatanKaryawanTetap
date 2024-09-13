@@ -39,6 +39,13 @@ export default class PerangkinganRepository {
     public async remove(id: number): Promise<void> {
         await PerangkinganModel.query(this.knexInstance).deleteById(id);
     }
+
+    // Update status validasi manager
+    public async updateValidasiManager(id: number, validasi_manager: boolean): Promise<Perangkingan> {
+        return await PerangkinganModel.query(this.knexInstance)
+            .patchAndFetchById(id, { validasi_manager:validasi_manager });
+    }
+
 }
 
 export const perangkinganRepository = new PerangkinganRepository(knexInstance);

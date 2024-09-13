@@ -5,12 +5,20 @@ import * as AuthService from "../../../service/authService"; // Pastikan path fi
 const loginUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const result = await AuthService.login(req.body);
+        
 
         if (result.user && result.token) {
+            const karyawan = await AuthService.getByUserId(result.user.id);
             res.status(200).json({ 
                 status:"OK",
                 message: "Login successful", 
-                user: result.user, 
+                // user: result.user, 
+                data: {
+                    user: result.user,
+                    karyawan: karyawan,
+                    // username: karyawan.username,
+                    // role: karyawan.role
+                },
                 token: result.token 
             });
         }  else if (result.error === 'INVALID_PASSWORD') {

@@ -12,6 +12,7 @@ import akunController from "./akunController";
 import evaluasiFaktorController from "./evaluasiFaktorController";
 import perhitunganController from "./perhitunganController";
 import perankinganController from "./perankinganController";
+import managerController from "./managerController";
 
 export {
   authController,
@@ -21,6 +22,7 @@ export {
   akunController,
   evaluasiFaktorController,
   perhitunganController,
-  perankinganController
+  perankinganController,
+  managerController
 };
 

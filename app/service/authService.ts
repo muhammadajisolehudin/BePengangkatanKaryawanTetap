@@ -1,6 +1,8 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { authRepository } from "../repositories/authRepository";
+import KaryawanRepository, { karyawanRepository } from "../repositories/karyawanRepository";
+import { Karyawan } from "../models/karyawan";
 
 // Mendefinisikan tipe User
 interface Akun {
@@ -47,6 +49,20 @@ const login = async (body: { username: string, password: string }) => {
     }
 }
 
+// Fungsi untuk mendapatkan data karyawan berdasarkan ID
+const getByUserId = async (id: number): Promise<{ message: string; karyawan?: Karyawan }> => {
+    try {
+        const karyawan = await karyawanRepository.getById(id);
+        if (!karyawan) {
+            return { message: `Karyawan with id ${id} not found` };
+        }
+        return { message: 'The karyawan was found', karyawan };
+
+    } catch (error: any) {
+        return { message: `Internal server error: ${error.message}` };
+    }
+};
+
 // const register = async (body: User) => {
 //     const { username, password, name, no_hp } = body;
 
@@ -77,5 +93,6 @@ const login = async (body: { username: string, password: string }) => {
 
 export {
     login,
+    getByUserId
     // register
 }

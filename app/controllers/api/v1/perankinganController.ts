@@ -45,6 +45,32 @@ const showPerangkingan = async (req: Request, res: Response, next: NextFunction)
     }
 };
 
+// Fungsi baru untuk menampilkan Perangkingan berdasarkan ID Karyawan
+const showPerangkinganByKaryawanId = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const karyawanId = Number(req.params.karyawanId);
+        if (isNaN(karyawanId)) {
+            res.status(400).json({
+                status: 'FAIL',
+                message: 'Invalid karyawanId. It must be a valid integer.',
+            });
+            return;
+        }
+
+        const result = await perangkinganService.getByKaryawanId(karyawanId);
+        res.status(result.status).json({
+            status: result.status === 200 ? 'OK' : 'FAIL',
+            data: result.status === 200 ? result.perangkingan : null,
+            message: result.message,
+        });
+    } catch (err) {
+        res.status(500).json({
+            status: 'ERROR',
+            message: (err as Error).message,
+        });
+    }
+};
+
 const destroyPerangkingan = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const result = await perangkinganService.remove(Number(req.params.id));
@@ -72,5 +98,6 @@ const destroyPerangkingan = async (req: Request, res: Response, next: NextFuncti
 export default {
     list: listPerangkingan,
     show: showPerangkingan,
+    showByKaryawanId: showPerangkinganByKaryawanId,
     destroy: destroyPerangkingan,
 };
