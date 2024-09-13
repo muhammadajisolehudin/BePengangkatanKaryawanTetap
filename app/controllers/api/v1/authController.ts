@@ -15,9 +15,7 @@ const loginUser = async (req: Request, res: Response, next: NextFunction): Promi
                 // user: result.user, 
                 data: {
                     user: result.user,
-                    karyawan,
-                    // username: karyawan.username,
-                    // role: karyawan.role
+                    karyawan: karyawan?.karyawan,
                 },
                 token: result.token 
             });

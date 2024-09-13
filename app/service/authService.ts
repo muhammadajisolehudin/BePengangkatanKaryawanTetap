@@ -50,13 +50,13 @@ const login = async (body: { username: string, password: string }) => {
 }
 
 // Fungsi untuk mendapatkan data karyawan berdasarkan ID
-const getByUserId = async (id: number): Promise<{ message: string; karyawan?: Karyawan }> => {
+const getByUserId = async (id: number): Promise<{ message?: string; karyawan?: Karyawan }> => {
     try {
         const karyawan = await karyawanRepository.getById(id);
         if (!karyawan) {
             return { message: `Karyawan with id ${id} not found` };
         }
-        return { message: 'The karyawan was found', karyawan };
+        return { karyawan };
 
     } catch (error: any) {
         return { message: `Internal server error: ${error.message}` };
