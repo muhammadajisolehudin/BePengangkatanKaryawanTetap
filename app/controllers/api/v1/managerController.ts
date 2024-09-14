@@ -42,22 +42,29 @@ const updateValidasiManager = async (req: Request, res: Response, next: NextFunc
 
 const getValidasiManagerStatus = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        // const { id } = req.params.id;
+        // Mendapatkan ID dari parameter
+        const id = Number(req.params.id);
 
         // Panggil fungsi untuk mendapatkan perangkingan berdasarkan ID
-        const perangkingan = await managerService.getManagerStatus(Number(req.params.id));
+        const perangkingan = await managerService.getManagerStatus(id);
 
         if (!perangkingan) {
             res.status(404).json({
                 status: 'FAIL',
-                message: `Perangkingan with id ${req.params.id} not found`,
+                message: `Perangkingan with id ${id} not found`,
             });
             return;
         }
 
+        // Ekstrak data yang diperlukan
+        const responseData = {
+            id: perangkingan.id,
+            validasi_manager: perangkingan.validasi_manager,
+        };
+
         res.status(200).json({
             status: 'OK',
-            data: perangkingan,
+            data: responseData,
         });
     } catch (err) {
         // Tangani kesalahan
@@ -67,6 +74,7 @@ const getValidasiManagerStatus = async (req: Request, res: Response, next: NextF
         });
     }
 };
+
 export default {
     updateValidasiManager,
     getValidasiManagerStatus,

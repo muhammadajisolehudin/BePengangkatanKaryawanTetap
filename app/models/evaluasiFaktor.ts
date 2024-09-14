@@ -10,7 +10,7 @@ export interface EvaluasiFaktor {
 }
 
 export class EvaluasiFaktorModel extends Model implements EvaluasiFaktor {
-    id?: number; // 'id' harus sesuai dengan tipe data auto-increment
+    id?: number; 
     bobot_kriteria!: number;
     bobot_subkriteria!: number;
     hasil_evaluasi_faktor!: number; 

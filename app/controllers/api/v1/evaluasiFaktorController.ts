@@ -25,43 +25,14 @@ const listEvaluasiFaktors = async (req: Request, res: Response, next: NextFuncti
     }
 };
 
-// Controller untuk membuat EvaluasiFaktor baru
-// const createEvaluasiFaktor = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-//     try {
-//         const result = await evaluasiFaktorService.create(req.body);
-//         res.status(result.status).json({
-//             status: 'OK',
-//             data: result.evaluasi_faktor,
-//             message: result.message,
-//         });
-//     } catch (err) {
-//         res.status(500).json({
-//             status: 'ERROR',
-//             message: (err as Error).message,
-//         });
-//     }
-// };
-
-// Controller untuk memperbarui EvaluasiFaktor
-// const updateEvaluasiFaktor = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-//     try {
-//         const result = await evaluasiFaktorService.update(Number(req.params.id), req.body);
-//         res.status(result.status).json({
-//             status: result.status === 200 ? 'OK' : 'FAIL',
-//             message: result.message,
-//         });
-//     } catch (err) {
-//         res.status(500).json({
-//             status: 'ERROR',
-//             message: (err as Error).message,
-//         });
-//     }
-// };
-
 // Controller untuk mendapatkan EvaluasiFaktor berdasarkan ID
 const showEvaluasiFaktor = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const result = await evaluasiFaktorService.getById(Number(req.params.id));
+        // if(result.evaluasi_faktor){
+        //     const kriteria = await evaluasiFaktorService.getKriteria(result.evaluasi_faktor)
+        // }
+        
         res.status(result.status).json({
             status: result.status === 200 ? 'OK' : 'FAIL',
             data: result.status === 200 ? result.evaluasi_faktor : null,
@@ -74,29 +45,6 @@ const showEvaluasiFaktor = async (req: Request, res: Response, next: NextFunctio
         });
     }
 };
-
-// Controller untuk menghapus EvaluasiFaktor
-// const destroyEvaluasiFaktor = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-//     try {
-//         const result = await evaluasiFaktorService.remove(Number(req.params.id));
-//         if (result.status === 404) {
-//             res.status(404).json({
-//                 status: 'FAIL',
-//                 message: result.message,
-//             });
-//             return;
-//         }
-//         res.status(200).json({
-//             status: 'OK',
-//             message: result.message,
-//         });
-//     } catch (err) {
-//         res.status(500).json({
-//             status: 'ERROR',
-//             message: (err as Error).message,
-//         });
-//     }
-// };
 
 export default {
     list: listEvaluasiFaktors,
