@@ -50,7 +50,8 @@ apiRouter.get('/api/v1/perankingan/karyawan/:karyawanId', controllers.api.v1.per
 apiRouter.delete('/api/v1/perankingan/:id', controllers.api.v1.perankinganController.destroy)
 
 apiRouter.put('/api/v1/manager/update-validasi-manager/:id', controllers.api.v1.managerController.updateValidasiManager)
-apiRouter.get('/api/v1/manager/get-status/:id', controllers.api.v1.managerController.getValidasiManagerStatus)
+apiRouter.get('/api/v1/manager/get-status', controllers.api.v1.managerController.getValidasiManagerStatus)
+apiRouter.get('/api/v1/manager/get-status/:id', controllers.api.v1.managerController.getValidasiManagerStatusById)
 // Konfigurasi Express untuk menyediakan akses file statis dari direktori uploads
 const UPLOAD_DIR = path.join(__dirname, '../uploads');
 apiRouter.use('/uploads', express.static(UPLOAD_DIR));
