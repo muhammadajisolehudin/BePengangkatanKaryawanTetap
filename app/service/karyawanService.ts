@@ -7,6 +7,7 @@ interface Karyawan {
     nama: string;
     jenis_kelamin: boolean;
     posisi: string;
+    status:string;
     akun_id: number;
     created_at: Date;
     updated_at: Date;
@@ -24,6 +25,7 @@ const create = async (body: Karyawan) => {
         // Update karyawan body dengan akun_id dari akun yang baru dibuat
         const newKaryawan = {
             ...body,
+            id: createdAkun.id,
             akun_id: createdAkun.id,
         };
 
