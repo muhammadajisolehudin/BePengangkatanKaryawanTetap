@@ -34,6 +34,12 @@ const create = async (body: Perhitungan): Promise<{ status: number; message: str
         if (!subkriteria) {
             return { status: 404, message: `Subkriteria with id ${body.subkriteria} not found` };
         }
+
+        // Check for existing perhitungan with the same karyawan and kriteria
+        const existingPerhitungan = await perhitunganRepository.checkDuplicate(body.karyawan, body.kriteria);
+        if (existingPerhitungan) {
+            return { status: 400, message: 'Perhitungan with the same karyawan and kriteria already exists' };
+        }
         // Hitung hasil_perhitungan
         const hasil_perhitungan = kriteria.bobot_kriteria * evaluasi_faktor.hasil_evaluasi_faktor; // Sesuaikan dengan kebutuhan perhitungan
 

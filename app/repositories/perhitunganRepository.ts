@@ -38,6 +38,14 @@ export default class PerhitunganRepository {
     public async remove(id: number): Promise<void> {
         await PerhitunganModel.query(this.knexInstance).deleteById(id);
     }
+
+    // Check for duplicate perhitungan with same karyawan and kriteria
+    public async checkDuplicate(karyawan: number, kriteria: number): Promise<Perhitungan | undefined> {
+        return await PerhitunganModel.query(this.knexInstance)
+            .where('karyawan', karyawan)
+            .andWhere('kriteria', kriteria)
+            .first();
+    }
 }
 
 // Export instance of PerhitunganRepository with knexInstance

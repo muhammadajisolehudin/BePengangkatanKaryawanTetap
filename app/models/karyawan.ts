@@ -6,6 +6,7 @@ export interface Karyawan {
   nip: string;
   nama: string;
   jenis_kelamin: boolean;
+  status: string;
   posisi: string;
   akun_id: number;
   created_at: Date;
@@ -17,6 +18,7 @@ export class KaryawanModel extends Model implements Karyawan {
   nip!:string;
   nama!: string;
   jenis_kelamin!: boolean;
+  status!: string;
   posisi!: string;
   akun_id!: number;
   created_at!: Date;
@@ -43,6 +45,9 @@ export class KaryawanModel extends Model implements Karyawan {
   $beforeInsert() {
     this.created_at = new Date();
     this.updated_at = new Date();
+    if (!this.status) {
+      this.status = 'karyawan';
+    }
   }
 
   $beforeUpdate() {
