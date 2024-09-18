@@ -6,7 +6,7 @@ interface Perangkingan {
     karyawan: number;
     nilai_perangkingan: number;
     keputusan_diangkat: boolean;
-    validasi_manager: boolean;
+    validasi_manager?: boolean;
     created_at: Date;
     updated_at: Date;
 }
@@ -52,7 +52,6 @@ const getByKaryawanId = async (karyawanId: number): Promise<{ status: number; me
 
 // Fungsi untuk memperbarui Perangkingan
 const updatePerankingan = async (karyawanId: number): Promise<void> => {
-    console.log(`Memperbarui perankingan untuk karyawanId: ${karyawanId}`);
     try {
         // Ambil semua perhitungan untuk karyawan tertentu
         const perhitunganList = await perhitunganRepository.getByKaryawanId(karyawanId);
@@ -83,7 +82,7 @@ const updatePerankingan = async (karyawanId: number): Promise<void> => {
         const formattedTotalScore = parseFloat(totalScore.toFixed(2));
 
         const keputusanDiangkat = formattedTotalScore > 0.6;
-        console.log(`Keputusan Diangkat untuk karyawanId ${karyawanId}: ${keputusanDiangkat}`);
+    
         const existingRanking = await perangkinganRepository.getByKaryawanId(karyawanId);
 
         if (existingRanking) {
@@ -91,7 +90,7 @@ const updatePerankingan = async (karyawanId: number): Promise<void> => {
             await perangkinganRepository.update(existingRanking.id, { nilai_perangkingan: formattedTotalScore, keputusan_diangkat: keputusanDiangkat });
         } else {
             // Jika belum ada, buat entri baru
-            await perangkinganRepository.create({ karyawan: karyawanId, nilai_perangkingan: formattedTotalScore, keputusan_diangkat: keputusanDiangkat, validasi_manager: false });
+            await perangkinganRepository.create({ karyawan: karyawanId, nilai_perangkingan: formattedTotalScore, keputusan_diangkat: keputusanDiangkat });
         }
     } catch (error: any) {
         console.error(`Kesalahan saat memperbarui perankingan: ${error.message}`);
