@@ -7,20 +7,20 @@ const { JWT_SECRET_KEY = 'secret' } = process.env;
 declare module 'express' {
   interface Request {
     user?: {
-      id: string;
+      id: number;
       role: string;
     };
   }
 }
 
 interface JwtPayload {
-  id: string;
+  id: number;
   role: string;
 }
 
 interface AuthenticatedRequest extends Request {
   user?: {
-    id: string;
+    id: number;
     role: string;
   };
 }
@@ -103,14 +103,14 @@ const auth = async (req: AuthenticatedRequest, res: Response, next: NextFunction
   }
 }
 
-const isAdmin = (req: Request, res: Response, next: NextFunction) => {
+const personalia = (req: Request, res: Response, next: NextFunction) => {
   if (!req.user) {
     return res.status(403).json({
       status: false,
       message: 'No user information',
     });
   }
-  if (req.user.role !== 'admin' && req.user.role !== 'super_admin') {
+  if (req.user.role !== 'personalia') {
     return res.status(403).json({
       status: false,
       message: 'Forbidden',
@@ -120,14 +120,14 @@ const isAdmin = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-const isSuperAdmin = (req: Request, res: Response, next: NextFunction) => {
+const manager = (req: Request, res: Response, next: NextFunction) => {
   if (!req.user) {
     return res.status(403).json({
       status: false,
       message: 'No user information',
     });
   }
-  if (req.user.role !== 'super_admin') {
+  if (req.user.role !== 'manager') {
     return res.status(403).json({
       status: false,
       message: 'Forbidden',
@@ -136,4 +136,4 @@ const isSuperAdmin = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-export { auth, isAdmin, isSuperAdmin };
+export { auth, personalia, manager };

@@ -7,6 +7,7 @@ export interface Perangkingan {
     nilai_perangkingan: number;
     keputusan_diangkat: boolean;
     validasi_manager?: boolean;
+    keterangan?: string;
     created_at: Date;
     updated_at: Date;
 }
@@ -17,6 +18,7 @@ export class PerangkinganModel extends Model implements Perangkingan {
     nilai_perangkingan!: number;
     keputusan_diangkat!: boolean;
     validasi_manager?: boolean;
+    keterangan?: string;
     created_at!: Date;
     updated_at!: Date;
 

@@ -9,6 +9,7 @@ export async function up(knex: Knex): Promise<void> {
 
         table.decimal('nilai_perangkingan', 10, 2).defaultTo(0);
         table.boolean('keputusan_diangkat').defaultTo(false).notNullable(); 
+        table.string('keterangan', 255),
         table.boolean('validasi_manager').defaultTo(null); 
     });
 }

@@ -4,7 +4,7 @@ import * as managerService from '../../../service/managerService';
 const updateValidasiManager = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const { id } = req.params;
-        const { validasi_manager } = req.body;
+        const { validasi_manager, keterangan } = req.body;
 
         // Validasi input
         if (typeof validasi_manager !== 'boolean') {
@@ -16,7 +16,7 @@ const updateValidasiManager = async (req: Request, res: Response, next: NextFunc
         }
 
         // Panggil fungsi untuk memperbarui status manager
-        const result = await managerService.updateValidasiManager(Number(id), validasi_manager);
+        const result = await managerService.updateValidasiManager(Number(id), validasi_manager, keterangan);
 
         if (result.status === 200) {
             res.status(200).json({

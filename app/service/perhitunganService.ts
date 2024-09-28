@@ -5,11 +5,11 @@ import { subkriteriaRepository } from '../repositories/subkriteriaRepository';
 import { updatePerankingan } from './perangkinganService';
 
 interface Perhitungan {
-    id: number; // 'id' sesuai dengan auto-increment
+    id: number; 
     karyawan: number;
     hasil_evaluasi_faktor: number;
     kriteria: number;
-    subkriteria: number;
+    // subkriteria: number;
     hasil_perhitungan: number; 
     created_at: Date;
     updated_at: Date;
@@ -30,10 +30,10 @@ const create = async (body: Perhitungan): Promise<{ status: number; message: str
             return { status: 404, message: `Kriteria with id ${body.kriteria} not found` };
         }
 
-        const subkriteria = await subkriteriaRepository.getById(body.subkriteria); // Ambil data subkriteria
-        if (!subkriteria) {
-            return { status: 404, message: `Subkriteria with id ${body.subkriteria} not found` };
-        }
+        // const subkriteria = await subkriteriaRepository.getById(body.subkriteria); // Ambil data subkriteria
+        // if (!subkriteria) {
+        //     return { status: 404, message: `Subkriteria with id ${body.subkriteria} not found` };
+        // }
 
         // Check for existing perhitungan with the same karyawan and kriteria
         const existingPerhitungan = await perhitunganRepository.checkDuplicate(body.karyawan, body.kriteria);

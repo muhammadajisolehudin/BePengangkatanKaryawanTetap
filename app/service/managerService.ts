@@ -2,7 +2,7 @@ import { perangkinganRepository } from '../repositories/perangkinganRepository';
 import { Perangkingan } from '../models/perangkingans';
 
 
-export const updateValidasiManager = async (id: number, validasi_manager: boolean): Promise<{ status: number; message: string; perhitungan?: Perangkingan }> => {
+export const updateValidasiManager = async (id: number, validasi_manager: boolean, keterangan:string): Promise<{ status: number; message: string; perhitungan?: Perangkingan }> => {
     try {
         // Cek apakah Perangkingan dengan ID yang diberikan ada
         const perangkingan = await perangkinganRepository.getById(id);
@@ -11,7 +11,7 @@ export const updateValidasiManager = async (id: number, validasi_manager: boolea
         }
 
         // Update status manager
-        const updatedPerangkingan = await perangkinganRepository.updateValidasiManager(id, validasi_manager);
+        const updatedPerangkingan = await perangkinganRepository.updateValidasiManager(id, validasi_manager, keterangan);
 
         return { status: 200, message: 'Perangkingan updated successfully', perhitungan: updatedPerangkingan };
     } catch (error: any) {

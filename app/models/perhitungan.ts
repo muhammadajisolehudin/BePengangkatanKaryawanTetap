@@ -9,7 +9,7 @@ export interface Perhitungan {
     karyawan: number;
     hasil_evaluasi_faktor: number;
     kriteria: number;
-    subkriteria: number;
+    // subkriteria: number;
     hasil_perhitungan: number;
     created_at: Date;
     updated_at: Date;
@@ -20,7 +20,7 @@ export class PerhitunganModel extends Model implements Perhitungan {
     karyawan!: number;
     hasil_evaluasi_faktor!: number;
     kriteria!: number;
-    subkriteria!: number;
+    // subkriteria!: number;
     hasil_perhitungan!: number;
     created_at!: Date;
     updated_at!: Date;
@@ -56,14 +56,14 @@ export class PerhitunganModel extends Model implements Perhitungan {
                     to: 'kriterias.id' 
                 }
             },
-            subkriteriaRelation: { 
-                relation: Model.BelongsToOneRelation,
-                modelClass: SubkriteriaModel,
-                join: {
-                    from: 'perhitungans.subkriteria', 
-                    to: 'subkriterias.id' 
-                }
-            }
+            // subkriteriaRelation: { 
+            //     relation: Model.BelongsToOneRelation,
+            //     modelClass: SubkriteriaModel,
+            //     join: {
+            //         from: 'perhitungans.subkriteria', 
+            //         to: 'subkriterias.id' 
+            //     }
+            // }
         };
     }
 

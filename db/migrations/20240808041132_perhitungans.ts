@@ -25,12 +25,12 @@ export async function up(knex: Knex): Promise<void> {
             .onDelete('CASCADE')  
             .onUpdate('CASCADE'); 
 
-        table.integer('subkriteria').unsigned().notNullable();
-        table.foreign('subkriteria')
-            .references('id')
-            .inTable('subkriterias')
-            .onDelete('CASCADE')  
-            .onUpdate('CASCADE'); 
+        // table.integer('subkriteria').unsigned().notNullable();
+        // table.foreign('subkriteria')
+        //     .references('id')
+        //     .inTable('subkriterias')
+        //     .onDelete('CASCADE')  
+        //     .onUpdate('CASCADE'); 
 
         table.decimal('hasil_perhitungan', 10, 2).notNullable();
 

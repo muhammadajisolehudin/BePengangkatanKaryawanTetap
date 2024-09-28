@@ -41,9 +41,9 @@ export default class PerangkinganRepository {
     }
 
     // Update status validasi manager
-    public async updateValidasiManager(id: number, validasi_manager: boolean): Promise<Perangkingan> {
+    public async updateValidasiManager(id: number, validasi_manager: boolean, keterangan:string): Promise<Perangkingan> {
         return await PerangkinganModel.query(this.knexInstance)
-            .patchAndFetchById(id, { validasi_manager:validasi_manager });
+            .patchAndFetchById(id, { validasi_manager:validasi_manager ,  keterangan:keterangan});
     }
 
 }
